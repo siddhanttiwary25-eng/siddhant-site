@@ -162,8 +162,8 @@ img { max-width: 100%; }
 }
 @media (max-width: 900px) {
   .section { grid-template-columns: 1fr; padding: 32px 16px 0; }
-  .section.mirror .heads { order: 0; }
-  .heads { margin: 0 auto; }
+  .section .content { order: 0; }
+  .section .heads, .section.mirror .heads { order: 1; margin: 48px auto 0; }   /* phones: writing first, monkeys after */
   .heads { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; align-items: end; }
   .spread .head, .mirror .spread .head { position: static; width: auto; height: auto; display: flex; }
   .spread .head .cap, .mirror .spread .head .cap { position: static; }

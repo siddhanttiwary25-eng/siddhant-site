@@ -18,10 +18,12 @@ interface Props {
   label?: string;
   /** Left-hand page number of this spread (the right-hand page is page + 1). */
   page: number;
+  /** One-line summary for search results and link previews. */
+  description?: string;
 }
-const { title, intro, mirror = false, longTitle = false, heads, label, page } = Astro.props;
+const { title, intro, mirror = false, longTitle = false, heads, label, page, description } = Astro.props;
 ---
-<Base title={`${title} — ${site.name}`}>
+<Base title={`${title} — ${site.name}`} description={description}>
   <Header back />
   <div class:list={['section', { mirror }]}>
     <HeadSpread heads={heads} />

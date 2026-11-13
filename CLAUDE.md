@@ -25,6 +25,9 @@ Built with Astro (static site). Live at https://siddhanttiwary.com (also www. an
 - `src/components/Head.astro` (head + caption), `HeadSpread.astro` (the scattered heads half of a spread: 6, 10 or 16 heads), `Folio.astro` (page numbers).
 - `heads-unused/` — retired picture sets (old luchador scans, luchador photos, monkey photos). Kept for reference, never published.
 
+## Sharing and search
+- Every page has a canonical URL, a link-preview image (`public/og.png`, 1200×630, made from the golden lion tamarin plate) and its own `description` (pass it to `<Section description=…>`). `public/robots.txt`, `src/pages/sitemap.xml.ts`, `public/favicon.ico` and `public/apple-touch-icon.png` exist. www.siddhanttiwary.com redirects (308) to siddhanttiwary.com.
+
 ## Design rules (keep these)
 - One typeface everywhere: Newsreader (serif). No second font.
 - The site is a magazine (reference: *Colors* magazine spreads). White page, near-black ink (#111), grey #555 for secondary text. No accent colours, no gradients, no shadows.
@@ -43,4 +46,4 @@ Built with Astro (static site). Live at https://siddhanttiwary.com (also www. an
 - `/contact`: name, email and message fields; Send opens the visitor's email app addressed to `site.email` (siddhanttiwary25@gmail.com). No form service yet.
 - Every head on a section page has a small caption printed above it (bold uppercase name + one line, from `credits.ts`).
 - Drop cap on the first paragraph of essays (idea posts, first idea on /ideas) only.
-- Phone: the home spread stacks (standfirst, then the five monkeys in a staggered two-column grid, then the Creative monkey); section pages show the scatter above the text, with five pictures (hero + four small, the rest hidden) so the writing starts soon.
+- Phone: the home spread stacks (standfirst, then the five monkeys in a staggered two-column grid, then the Creative monkey); section pages show the writing first and the scatter below it, with five pictures (hero + four small, the rest hidden).

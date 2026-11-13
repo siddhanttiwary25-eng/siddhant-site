@@ -16,8 +16,8 @@ export const work = [
   { meta: 'Sunny Day Fund · Falls Church, VA · June – August 2025', title: 'Sales and Product Analyst', about: 'A fintech offering automated workplace emergency savings to companies like Amazon, Disney and DoorDash.',
     bullets: [
       'Executed investor due diligence across 40+ fintech VCs using PitchBook, securing 10+ investor meetings',
-      'Developed credit risk models in Python, using SDF’s financial health metrics to price insurance premiums',
-      'Analyzed regulation and compliance across 21 FHSA programs, mapping tax frameworks for expansion into 8 target states',
+      'Developed credit risk models in Python, using Sunny Day Fund’s financial health metrics to price insurance premiums',
+      'Analyzed regulation and compliance across 21 state first-time homebuyer savings account (FHSA) programs, mapping tax frameworks for expansion into 8 target states',
     ] },
   { meta: 'InkLink · San Francisco, CA · December 2024 – January 2025', title: 'Growth and Research Intern', about: 'An early-stage startup building ML-powered onboarding and KYC tools for secure, scalable verification.',
     bullets: [
@@ -40,7 +40,7 @@ export const work = [
 ];
 
 export const creative = [
-  { meta: 'App', title: 'Set', summary: 'Rewind any DJ set or concert, keep the moments that hit hardest, and share them.', preview: '/projects/set.webp' as string | null, href: 'https://set-app-blush.vercel.app' as string | null, credit: null as string | null },
+  { meta: 'App · Work in progress', title: 'Set', summary: 'Rewind any DJ set or concert, keep the moments that hit hardest, and share them. It’s still a work in progress, so I’d really appreciate your feedback.', preview: '/projects/set.webp' as string | null, href: 'https://set-app-blush.vercel.app' as string | null, credit: null as string | null },
   { meta: 'Community', title: 'Foghorn', summary: 'An invite-only place for people who care about music.', preview: '/projects/foghorn.webp', href: null, credit: null },
   { meta: 'Video series', title: 'Can I get an extension?', summary: 'A short interview series in which a UT Austin student sits down with professors to talk about the research they actually do, mixing genuine curiosity with the occasional unserious question.', preview: '/projects/extension.webp', href: null, credit: 'Photo: Guðsþegn, CC BY-SA 3.0, via Wikimedia Commons' },
   { meta: 'Research', title: 'Ground Truth', summary: 'A village-by-village record of what actually worked in rural India, with an API so anyone can build on the data.', preview: '/projects/ground-truth.webp', href: null, credit: 'Photo: Vraj Acharya / WELL Labs, CC BY-SA 4.0, via Wikimedia Commons' },
@@ -54,7 +54,7 @@ export const myArticles = [
 
 // Articles page, part two: things I've read recently.
 export const readArticles = [
-  { id: 'east-of-eden', source: 'Book', meta: 'John Steinbeck · 1952', title: 'East of Eden', why: 'More saga than novel. It explores the banality of evil, the pull of good, and how much our nature really decides.', href: '#' },
+  { id: 'east-of-eden', source: 'Book', meta: 'John Steinbeck · 1952', title: 'East of Eden', why: 'More saga than novel. It explores the banality of evil, the pull of good, and how much our nature really decides.', href: 'https://en.wikipedia.org/wiki/East_of_Eden_(novel)' },
   { id: '', source: 'Essay', meta: 'Kathleen Marie Higgins · 2013', title: 'Love and Death', why: 'Grief isn’t meant to end on schedule. Love shapes who we are, so carrying the dead with us is love continuing, not a failure to move on.', href: 'https://academic.oup.com/book/8931' },
   { id: '', source: 'Substack', meta: 'Polymath Investor · 2026', title: 'How I’d Learn Investing Using AI', why: 'School hands you the answers before you’ve felt the questions. AI flips that back: Socrates on demand, and a stock on the table.', href: 'https://www.polymathinvestor.com/p/how-id-learn-investing-using-ai' },
   { id: '', source: 'Paper', meta: 'Satoshi Nakamoto · 2008', title: 'Bitcoin: A Peer-to-Peer Electronic Cash System', why: 'Nine pages that made a ledger nobody owns.', href: 'https://bitcoin.org/bitcoin.pdf' },

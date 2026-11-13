@@ -10,6 +10,7 @@ const ideas = (await getCollection('ideas', ({ data }) => !data.draft)).sort(
 const entries = await Promise.all(ideas.map(async (idea) => ({ idea, Content: (await render(idea)).Content })));
 ---
 <Section
+  description="Short essays by Siddhant Tiwary on payments, AI agents, game theory and DJing."
   page={2}
   title="Ideas"
   intro="Short patches of things I keep thinking about, and where the thinking came from."

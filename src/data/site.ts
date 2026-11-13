@@ -4,8 +4,9 @@ export const site = {
   name: 'Siddhant Tiwary',
   // Where the contact page sends messages.
   email: 'siddhanttiwary25@gmail.com',
-  description: 'A notebook, kept in public: ideas, work, creative projects, articles and music.',
+  description: 'Siddhant Tiwary studies finance and economics at UT Austin and builds in payments and AI. Ideas, work, projects, reading and music.',
   links: [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/siddhant-tiwary' },
     { label: 'Twitter', href: 'https://x.com/kemosabesid' },
     { label: 'Contact', href: '/contact' },
     { label: 'GitHub', href: 'https://github.com/siddhanttiwary25-eng' },
