@@ -1,0 +1,36 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import HeadSpread from '../components/HeadSpread.astro';
+import Folio from '../components/Folio.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  intro?: string;
+  /** Heads on the right, text on the left. */
+  mirror?: boolean;
+  /** Use a smaller title size for long titles. */
+  longTitle?: boolean;
+  /** Heads in the half-page scatter (6, 10 or 16); the first is the hero. */
+  heads: string[];
+  /** Name in the folio at the bottom; defaults to the title. */
+  label?: string;
+  /** Left-hand page number of this spread (the right-hand page is page + 1). */
+  page: number;
+}
+const { title, intro, mirror = false, longTitle = false, heads, label, page } = Astro.props;
+---
+<Base title={`${title} — ${site.name}`}>
+  <Header back />
+  <div class:list={['section', { mirror }]}>
+    <HeadSpread heads={heads} />
+    <main class="content">
+      <p class="kicker">{label ?? title}</p>
+      <h1 class:list={{ long: longTitle }}>{title}</h1>
+      {intro && <p class="intro">{intro}</p>}
+      <slot />
+    </main>
+  </div>
+  <Folio page={page} label={label ?? title} />
+</Base>

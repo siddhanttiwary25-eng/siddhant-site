@@ -1,0 +1,22 @@
+---
+import Section from '../layouts/Section.astro';
+import { h, site } from '../data/site';
+---
+<Section
+  page={12}
+  title="About me"
+  mirror
+  heads={[h('common-marmoset'), h('moloneys-monkey'), h('golden-lion-tamarin'), h('macacus-libidinosus'), h('red-bellied-guenon'), h('black-tufted-marmoset'), h('cotton-top-tamarin'), h('hamadryas-baboon'), h('monk-saki'), h('bearded-saki')]}
+>
+  <div class="bio">
+    <p>I’m Siddhant (as you may have guessed from the name at the top). I grew up in Bangalore, India, and I’m now double majoring in finance and economics at UT Austin.</p>
+    <p>More than anything, I want to learn how to build, and I’ve tried to do that in everything I’ve worked on: payment systems and wallets for AI agents, an app for finding and sharing the best moments of a DJ set, AI tools for non-technical teams in real estate and investing, and APIs for NGOs in India.</p>
+    <p>Away from all that, my current obsessions are chess and EDM. <a href="/contact">Reach out</a> if you want to talk about either, help on one of my projects, share an interesting opportunity or some research, or really anything else.</p>
+    <p>I hope this site ends up as more than a resume: a record of what I’m thinking, what I’m feeling, and how I work things out along the way.</p>
+  </div>
+  <ul class="list" style="margin-top:34px">
+    {site.links.map((l) => (
+      <li><a class="out" href={l.href}><span>{l.label}</span><span>↗</span></a></li>
+    ))}
+  </ul>
+</Section>

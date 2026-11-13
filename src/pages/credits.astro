@@ -1,0 +1,30 @@
+---
+// "List of plates": the field-guide index of every monkey on the site, with its source book.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Folio from '../components/Folio.astro';
+import { site, h } from '../data/site';
+import { credits, plateNo } from '../data/credits';
+---
+<Base title={`List of plates — ${site.name}`} description="Where every monkey on this site comes from.">
+  <Header back />
+  <main class="plates">
+    <p class="kicker">Picture credits</p>
+    <h1>List of plates</h1>
+    <p class="intro">Every monkey here is cut out of a hand-coloured plate in an old natural-history book. The originals are in the public domain; the scans are on Wikimedia Commons.</p>
+    <ol class="plate-list">
+      {credits.map((c, i) => (
+        <li>
+          <a href={c.href} target="_blank" rel="noopener">
+            <span class="plate-img"><img src={h(c.head)} alt="" /></span>
+            <span class="plate-no">Pl. {plateNo(i)}</span>
+            <span class="item-title">{c.who}</span>
+            {c.latin && <span class="plate-latin">{c.latin}</span>}
+            <span class="plate-src">From {c.by} · {c.license} ↗</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </main>
+  <Folio page={14} label="List of plates" />
+</Base>

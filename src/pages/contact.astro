@@ -1,0 +1,30 @@
+---
+// Contact: a short form that opens the visitor's email app with the message filled in,
+// addressed to site.email. The address is also shown as a plain link.
+import Section from '../layouts/Section.astro';
+import { h, site } from '../data/site';
+---
+<Section
+  page={16}
+  title="Contact"
+  intro="Say hello, send an idea, or tell me what I got wrong."
+  heads={[h('red-handed-tamarin'), h('lhoests-monkey'), h('moloneys-monkey'), h('black-headed-uakari'), h('silvery-marmoset'), h('spot-nosed-monkey'), h('king-colobus'), h('red-shanked-douc'), h('proboscis-monkey'), h('grey-woolly-monkey')]}
+>
+  <form class="contact" id="contact" data-to={site.email}>
+    <label>Your name<input name="name" autocomplete="name" required /></label>
+    <label>Your email<input name="from" type="email" autocomplete="email" required /></label>
+    <label>Message<textarea name="message" rows="7" required></textarea></label>
+    <button class="btn solid" type="submit">Send ↗</button>
+  </form>
+  <p class="contact-note">This opens your email app with the message ready to send. Or write to me directly at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  <script>
+    const form = document.getElementById('contact') as HTMLFormElement | null;
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const subject = `Hello from ${d.get('name')}`;
+      const body = `${d.get('message')}\n\n${d.get('name')} (${d.get('from')})`;
+      window.location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</Section>

@@ -1,0 +1,28 @@
+---
+import Section from '../layouts/Section.astro';
+import { h } from '../data/site';
+import { work } from '../data/pages';
+---
+<Section
+  page={4}
+  title="Work"
+  intro="What I’ve worked on, and what I’m currently working on."
+  mirror
+  heads={[h('orangutan'), h('macacus-libidinosus'), h('red-tailed-monkey'), h('silvery-marmoset'), h('lhoests-monkey'), h('hamadryas-baboon'), h('andaman-macaque'), h('tufted-capuchin'), h('grey-woolly-monkey'), h('red-shanked-douc')]}
+>
+  <div class="bio">
+  <p>I graduate in May 2027, and I’m looking for full-time roles where I can keep building. That means product and strategy roles at startups, especially in payments, fintech and AI; founder’s associate and business operations roles, close to the people running the company; and investing roles at venture or growth funds that back those kinds of companies.</p>
+  </div>
+  <ol class="list">
+    {work.map((w) => (
+      <li class="work-item">
+        <div>
+          <span class="meta">{w.meta}</span>
+          <span class="item-title">{w.title}</span>
+          <span class="item-about">{w.about}</span>
+          <ul class="bullets">{w.bullets.map((b) => <li>{b}</li>)}</ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+</Section>

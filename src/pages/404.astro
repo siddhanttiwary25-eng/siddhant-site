@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Head from '../components/Head.astro';
+import { site, h } from '../data/site';
+
+const slugs = (await getCollection('ideas', ({ data }) => !data.draft)).map((i) => i.id);
+---
+<Base title={`Page not found — ${site.name}`}>
+  <Header />
+  <main class="lost">
+    <p class="kicker">Page 404 · Plate missing</p>
+    <div class="lost-pair">
+      <Head class="lost-head" src={h('macacus-libidinosus')} />
+      <Head class="lost-head small" src={h('red-howler')} />
+    </div>
+    <h1>This page wandered off</h1>
+    <p class="intro">Like this one, mid-stride. Nothing’s here; want to wander somewhere else?</p>
+    <div class="actions">
+      <a class="btn solid" href="/ideas" id="wander" data-slugs={JSON.stringify(slugs)}>Wander ↝</a>
+      <a class="btn" href="/">Home</a>
+    </div>
+  </main>
+  <script>
+    // "Wander" opens a random idea.
+    const link = document.getElementById('wander') as HTMLAnchorElement | null;
+    const slugs: string[] = JSON.parse(link?.dataset.slugs ?? '[]');
+    if (link && slugs.length) link.href = `/ideas/${slugs[Math.floor(Math.random() * slugs.length)]}`;
+  </script>
+</Base>

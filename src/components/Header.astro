@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  /** Show "← All sections" under the name (section and post pages). */
+  back?: boolean;
+  /** Show Twitter / Contact / GitHub on the right (home page). */
+  links?: boolean;
+}
+const { back = false, links = false } = Astro.props;
+---
+<header class="site-header">
+  <div>
+    <a class="site-name" href="/">{site.name}</a>
+    {back && <div><a class="back" href="/">← All sections</a></div>}
+  </div>
+  {links && (
+    <nav class="toplinks" aria-label="Elsewhere">
+      {site.links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+  )}
+</header>

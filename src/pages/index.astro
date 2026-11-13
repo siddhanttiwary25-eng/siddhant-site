@@ -1,0 +1,71 @@
+---
+// Home: the field-guide contents. "Lately…" standfirst on top, then all six sections side by side,
+// each a big clickable name with its monkey above it and a tiny plate caption. The section names are the focus.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import { site, lately, sections } from '../data/site';
+import { headInfo } from '../data/credits';
+
+// Section page numbers, matching the folios on each section spread.
+const pageOf: Record<string, string> = { '/ideas': '02', '/work': '04', '/creative': '06', '/articles': '08', '/music': '10', '/about': '12' };
+---
+<Base>
+  <div class="home">
+    <Header links />
+    <main class="hm">
+      <div class="hm-top">
+        <p class="lately">
+          {lately.map((part) => (typeof part === 'string' ? part : <a href={part.href}>{part.text}</a>))}
+        </p>
+      </div>
+      <nav aria-label="Sections">
+        <ul class="hm-row">
+          {sections.map((s) => {
+            const info = headInfo(s.head);
+            return (
+              <li>
+                <a class="hm-btn" href={s.href}>
+                  {info && <span class="hm-cap">Pl. {info.plate} · {info.who}</span>}
+                  <span class="watch"><img src={s.head} alt="" /></span>
+                  <span class="hm-label"><i>{pageOf[s.href]}</i>{s.label}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </main>
+    <footer class="folio">
+      <span><b>01</b></span>
+      <span class="fg-note">{site.maskNote} <a href="/credits">Picture credits</a></span>
+      <span>Contents</span>
+    </footer>
+  </div>
+
+  <script>
+    // The monkeys lean toward the cursor. Desktop only; off for people who reduce motion.
+    const heads = Array.from(document.querySelectorAll<HTMLElement>('.home .watch'));
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (canHover && !reduce && heads.length) {
+      let frame = 0;
+      let mouseX = 0;
+      const update = () => {
+        frame = 0;
+        for (const el of heads) {
+          const r = el.getBoundingClientRect();
+          const dx = mouseX - (r.left + r.width / 2);
+          const rot = Math.max(-8, Math.min(8, dx / 60));
+          el.style.transform = `rotate(${rot}deg)`;
+        }
+      };
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        if (!frame) frame = requestAnimationFrame(update);
+      });
+      document.documentElement.addEventListener('mouseleave', () => {
+        for (const el of heads) el.style.transform = '';
+      });
+    }
+  </script>
+</Base>

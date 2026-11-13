@@ -1,0 +1,40 @@
+---
+// The heads half of a spread, laid out like a magazine page: one big head, then the others
+// scattered at staggered heights beside the writing. The scatter is positioned in percentages of the
+// column, which is exactly as tall as the text next to it, so adding monkeys never makes a page longer.
+// Each layout is [left, top, width, height] in % of the column for the picture itself; its caption sits
+// just above that box. `mirror` pages flip left-to-right in CSS.
+import Head from './Head.astro';
+
+interface Props {
+  /** The heads, first one is the hero. 6, 10 or 16 pick a layout; other counts use the next one up. */
+  heads: string[];
+}
+const { heads } = Astro.props;
+
+const LAYOUTS: Record<number, number[][]> = {
+  6: [
+    [0, 5, 64, 33], [70, 10.7, 30, 14], [4, 48.7, 34, 14], [52, 52.5, 34, 15.9], [18, 77.2, 30, 14],
+    [62, 79.1, 34, 14],
+  ],
+  10: [
+    [0, 5, 62, 26.4], [70, 7.8, 30, 11.2], [68, 26.9, 30, 10.2], [2, 40.1, 30, 10.2], [38, 44, 26, 8.3],
+    [68, 46.8, 30, 12.1], [6, 59.1, 36, 12.1], [50, 63.9, 30, 10.2], [14, 81, 30, 11.2], [58, 82.9, 36, 12.1],
+  ],
+  16: [
+    [0, 2, 62, 14.7], [70, 4, 30, 6.8], [66, 14.7, 32, 6.8], [2, 21.6, 30, 5.8], [40, 24.5, 26, 5.8],
+    [70, 27.5, 30, 6.8], [6, 33.4, 36, 7.8], [52, 37.3, 32, 6.8], [14, 47.1, 30, 6.8], [58, 50, 36, 7.8],
+    [2, 59.8, 34, 7.8], [44, 62.8, 26, 5.8], [70, 65.7, 30, 6.8], [10, 73.5, 34, 7.8], [52, 78.4, 36, 7.8],
+    [20, 88.2, 32, 8.8],
+  ],
+};
+const n = [6, 10, 16].find((k) => k >= heads.length) ?? 16;
+const slots = LAYOUTS[n];
+const size = (i: number) => (i === 0 ? 'hero' : i < 3 ? 'secondary' : 'small');
+---
+<div class="heads spread">
+  {heads.slice(0, n).map((src, i) => {
+    const [x, y, w, h] = slots[i];
+    return <Head class={`${size(i)} s${i + 1}`} src={src} lazy={i > 1} style={`--x:${x}%;--y:${y}%;--w:${w}%;--h:${h}%`} />;
+  })}
+</div>

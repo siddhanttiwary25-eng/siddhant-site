@@ -1,0 +1,27 @@
+---
+import Section from '../layouts/Section.astro';
+import { h } from '../data/site';
+import { creative } from '../data/pages';
+---
+<Section
+  page={6}
+  title="Creative projects"
+  longTitle
+  intro="Previews of what I’m trying to make, built in public."
+  heads={[h('red-bellied-guenon'), h('red-handed-tamarin'), h('moloneys-monkey'), h('golden-lion-tamarin'), h('black-headed-uakari'), h('red-shanked-douc'), h('mandrill'), h('cotton-top-tamarin'), h('bearded-saki'), h('spot-nosed-monkey')]}
+>
+  <div class="cards">
+    {creative.map((c) => (
+      <article class="card">
+        {c.preview ? (
+          <img class="preview" src={c.preview} alt={`Preview of ${c.title}`} loading="lazy" />
+        ) : (
+          <span class="preview" aria-hidden="true"><span class="preview-label">Plate to come</span></span>
+        )}
+        <span class="meta" style="margin-top:12px">{c.meta}</span>
+        <h2 class="item-title" style="margin:4px 0 0">{c.title}</h2>
+        <p class="item-sum" style="margin:5px 0 0">{c.summary}</p>
+      </article>
+    ))}
+  </div>
+</Section>

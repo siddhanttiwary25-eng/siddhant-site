@@ -1,0 +1,60 @@
+---
+import Section from '../layouts/Section.astro';
+import { h } from '../data/site';
+import { albums, playlists, songs } from '../data/pages';
+---
+<Section
+  page={10}
+  title="Songs & albums"
+  longTitle
+  intro="What I’ve had on repeat lately."
+  heads={[h('red-tailed-monkey'), h('black-headed-uakari'), h('red-handed-tamarin'), h('lhoests-monkey'), h('orangutan'), h('red-howler'), h('mandrill'), h('tufted-capuchin'), h('grey-woolly-monkey'), h('andaman-macaque')]}
+>
+  <h2 class="subhead">Albums</h2>
+  <div style="margin-top:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px">
+    {albums.map((al) => (
+      <a class="card" href={al.href}>
+        {al.cover ? (
+          <img class="preview square" src={al.cover} alt={`${al.title} cover`} loading="lazy" />
+        ) : (
+          <span class="preview square" aria-hidden="true"><span class="preview-label">Cover to come</span></span>
+        )}
+        <span class="meta" style="margin-top:12px">{al.meta}</span>
+        <span class="item-title">{al.title}</span>
+        <span class="liked-label">Songs I liked</span>
+        <ul class="liked">{al.liked.map((t) => <li>{t}</li>)}</ul>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="subhead" style="margin-top:36px">Playlists</h2>
+  <div style="margin-top:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px">
+    {playlists.map((p) => (
+      <a class="card" href={p.href}>
+        {p.cover ? (
+          <img class="preview square" src={p.cover} alt={`${p.title} cover`} loading="lazy" />
+        ) : (
+          <span class="preview square" aria-hidden="true"><span class="preview-label">Cover to come</span></span>
+        )}
+        <span class="meta" style="margin-top:12px">{p.meta}</span>
+        <span class="item-title">{p.title}</span>
+        <span class="item-sum" style="margin-top:6px">{p.words}</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="subhead" style="margin-top:36px">Songs I can’t get out of my head</h2>
+  <ol class="list songs">
+    {songs.map((s) => (
+      <li>
+        <a class="item" href={s.href}>
+          {s.cover ? <img class="thumb" src={s.cover} alt="" loading="lazy" /> : <span class="thumb" aria-hidden="true" />}
+          <span>
+            <span class="item-title" style="margin:0;font-size:20px">{s.title}</span>
+            <span class="item-sum">{s.words}</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</Section>

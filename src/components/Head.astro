@@ -1,0 +1,17 @@
+---
+// One cut-out head with its small magazine caption printed above it (Colors-style).
+import { headInfo } from '../data/credits';
+
+interface Props {
+  src: string;
+  class?: string;
+  lazy?: boolean;
+  style?: string;
+}
+const { src, class: cls, lazy = false, style } = Astro.props;
+const info = headInfo(src);
+---
+<figure class:list={['head', cls]} style={style}>
+  {info && <figcaption class="cap"><span class="pl">Pl. {info.plate}</span> <b>{info.who}.</b> {info.caption}</figcaption>}
+  <img src={src} alt="" loading={lazy ? 'lazy' : undefined} />
+</figure>

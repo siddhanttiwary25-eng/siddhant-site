@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Section from '../../layouts/Section.astro';
+import { h } from '../../data/site';
+import { formatDate, readMinutes } from '../../utils';
+
+const ideas = (await getCollection('ideas', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const entries = await Promise.all(ideas.map(async (idea) => ({ idea, Content: (await render(idea)).Content })));
+---
+<Section
+  page={2}
+  title="Ideas"
+  intro="Short patches of things I keep thinking about, and where the thinking came from."
+  heads={[h('golden-lion-tamarin'), h('silvery-marmoset'), h('lhoests-monkey'), h('red-handed-tamarin'), h('black-headed-uakari'), h('moloneys-monkey'), h('orangutan'), h('common-marmoset'), h('mandrill'), h('cotton-top-tamarin'), h('proboscis-monkey'), h('red-howler'), h('king-colobus'), h('black-tufted-marmoset'), h('hamadryas-baboon'), h('spot-nosed-monkey')]}
+>
+  <div style="margin-top: 30px; border-top: 1.5px solid var(--ink)">
+    {entries.map(({ idea, Content }) => (
+      <article class="idea">
+        <p class="meta" style="margin:0">{formatDate(idea.data.date)} · {readMinutes(idea.body)} min</p>
+        <h2><a href={`/ideas/${idea.id}`}>{idea.data.title}</a></h2>
+        <div class="body"><Content /></div>
+        {idea.data.references.length > 0 && <p class="refs">References: {idea.data.references.join('; ')}</p>}
+      </article>
+    ))}
+  </div>
+</Section>

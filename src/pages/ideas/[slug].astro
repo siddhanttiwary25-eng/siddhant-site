@@ -1,0 +1,49 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import HeadSpread from '../../components/HeadSpread.astro';
+import Folio from '../../components/Folio.astro';
+import { site, h } from '../../data/site';
+import { formatDate, readMinutes } from '../../utils';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas', ({ data }) => !data.draft);
+  return ideas.map((idea) => ({ params: { slug: idea.id }, props: { idea, all: ideas } }));
+}
+
+const { idea, all } = Astro.props;
+const { Content } = await render(idea);
+const threads = all.filter((i) => i.id !== idea.id).slice(0, 3);
+const threadHeads = [h('golden-lion-tamarin'), h('lion-tailed-macaque'), h('red-tailed-monkey')];
+---
+<Base title={`${idea.data.title} — ${site.name}`} description={idea.data.summary}>
+  <Header back />
+  <div class="section">
+    <HeadSpread heads={[h('black-headed-uakari'), h('red-handed-tamarin'), h('lhoests-monkey'), h('bearded-saki'), h('tufted-capuchin'), h('monk-saki')]} />
+    <main class="content post">
+      <p class="kicker">Idea · {formatDate(idea.data.date)} · {readMinutes(idea.body)} min read</p>
+      <h1 style="margin-top:18px">{idea.data.title}</h1>
+      <p class="intro" style="font-size:20px">{idea.data.summary}</p>
+      <div class="body"><Content /></div>
+      {idea.data.references.length > 0 && <p class="refs">References: {idea.data.references.join('; ')}</p>}
+      {threads.length > 0 && (
+        <section class="threads" aria-labelledby="threads">
+          <h2 id="threads">Threads</h2>
+          <ul>
+            {threads.map((t, i) => (
+              <li>
+                <a class="item" href={`/ideas/${t.id}`} style="padding:0">
+                  <img src={threadHeads[i % threadHeads.length]} alt="" loading="lazy" />
+                  <span class="meta">{formatDate(t.data.date)}</span>
+                  <span class="item-title" style="font-size:16px">{t.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </main>
+  </div>
+  <Folio page={2} label="Ideas" />
+</Base>
