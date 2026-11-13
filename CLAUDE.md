@@ -1,7 +1,7 @@
 # Siddhant Tiwary — personal site
 
 A notebook kept in public: ideas, work, creative projects, articles, songs & albums, and an about page.
-Built with Astro (static site). Live at https://siddhant-site.vercel.app (Vercel project `siddhant-site`, account siddhanttiwary25-eng). Code: private repo github.com/siddhanttiwary25-eng/siddhant-site. Deploys are by hand from this folder: `npx vercel --prod` (the repo is not hooked up to auto-deploy). Push with the personal account: `GH_TOKEN=$(gh auth token -u siddhanttiwary25-eng) git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push`; never switch the global gh account.
+Built with Astro (static site). Live at https://siddhanttiwary.com (also www. and siddhant-site.vercel.app; domain bought on Vercel 2026-11-12, renews Nov 2027) (Vercel project `siddhant-site`, account siddhanttiwary25-eng). Code: private repo github.com/siddhanttiwary25-eng/siddhant-site. Deploys are by hand from this folder: `npx vercel --prod` (the repo is not hooked up to auto-deploy). Push with the personal account: `GH_TOKEN=$(gh auth token -u siddhanttiwary25-eng) git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push`; never switch the global gh account.
 
 ## Working with Siddhant
 - Ask before assuming anything about content, layout or wording. Offer options when a choice is open.
