@@ -40,11 +40,11 @@ export const work = [
 ];
 
 export const creative = [
-  { meta: 'App', title: 'Set', summary: 'Rewind any DJ set or concert, keep the moments that hit hardest, and share them.', preview: null as string | null },
-  { meta: 'Community', title: 'Foghorn', summary: 'An invite-only place for people who care about music.', preview: null },
-  { meta: 'Video series', title: 'Can I get an extension?', summary: 'A short interview series in which a UT Austin student sits down with professors to talk about the research they actually do, mixing genuine curiosity with the occasional unserious question.', preview: null },
-  { meta: 'Research', title: 'Ground Truth', summary: 'A village-by-village record of what actually worked in rural India, with an API so anyone can build on the data.', preview: null },
-  { meta: 'Radio show · KVRX · September 2023 – May 2025', title: 'Jazz and philosophy on KVRX', summary: 'A jazz philosophy show on UT’s student radio station, reaching 10,000+ listeners a month, plus 40+ interviews with Austin artists.', preview: null },
+  { meta: 'App', title: 'Set', summary: 'Rewind any DJ set or concert, keep the moments that hit hardest, and share them.', preview: '/projects/set.webp' as string | null, href: 'https://set-app-blush.vercel.app' as string | null, credit: null as string | null },
+  { meta: 'Community', title: 'Foghorn', summary: 'An invite-only place for people who care about music.', preview: '/projects/foghorn.webp', href: null, credit: null },
+  { meta: 'Video series', title: 'Can I get an extension?', summary: 'A short interview series in which a UT Austin student sits down with professors to talk about the research they actually do, mixing genuine curiosity with the occasional unserious question.', preview: '/projects/extension.webp', href: null, credit: 'Photo: Guðsþegn, CC BY-SA 3.0, via Wikimedia Commons' },
+  { meta: 'Research', title: 'Ground Truth', summary: 'A village-by-village record of what actually worked in rural India, with an API so anyone can build on the data.', preview: '/projects/ground-truth.webp', href: null, credit: 'Photo: Vraj Acharya / WELL Labs, CC BY-SA 4.0, via Wikimedia Commons' },
+  { meta: 'Radio show · KVRX · September 2023 – May 2025', title: 'Jazz and philosophy on KVRX', summary: 'A jazz philosophy show on UT’s student radio station, reaching 10,000+ listeners a month, plus 40+ interviews with Austin artists.', preview: '/projects/kvrx.webp', href: null, credit: 'Photo: Ty Hardin for KVRX 91.7 FM, CC BY 3.0, via Wikimedia Commons' },
 ];
 
 // Articles page, part one: pieces I've written. `id` is the anchor the home page links to.

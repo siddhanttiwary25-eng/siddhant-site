@@ -114,6 +114,8 @@ img { max-width: 100%; }
 
 .cards { margin-top: 30px; padding-top: 24px; border-top: 1.5px solid var(--ink); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 26px; }
 .card { display: block; text-decoration: none; }
+.photo-credit { display: block; margin-top: 5px; font-size: 10px; font-style: italic; color: var(--muted); }
+.open-link { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .card:hover .item-title { text-decoration: underline; text-underline-offset: 4px; }
 .preview { position: relative; display: block; height: 170px; background: #fff; border: 1px solid var(--ink); outline: 1px solid var(--ink); outline-offset: -6px; object-fit: cover; width: 100%; }  /* a double-ruled plate frame */
 .preview.square { height: auto; aspect-ratio: 1 / 1; }
