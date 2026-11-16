@@ -47,6 +47,11 @@ export const creative = [
   { meta: 'Radio show · KVRX · September 2023 – May 2025', title: 'Jazz and philosophy on KVRX', summary: 'A jazz philosophy show on UT’s student radio station, reaching 10,000+ listeners a month, plus 40+ interviews with Austin artists.', preview: '/projects/kvrx.webp', href: null, credit: 'Photo: Ty Hardin for KVRX 91.7 FM, CC BY 3.0, via Wikimedia Commons' },
 ];
 
+// Creative page, second section: one-off experiments and benchmarks.
+export const experiments = [
+  { meta: 'Benchmark · November 2026', title: 'Same bet?', summary: 'Is a Polymarket market and a Kalshi market the same bet? I tested TypeSafe’s Jev against title matching on 197 hand-labeled look-alike pairs: 98% accurate with zero false matches, against 83% for the best title match.', preview: '/projects/same-bet.webp', href: '/same-bet/', code: 'https://github.com/siddhanttiwary25-eng/same-bet-jev' },
+];
+
 // Articles page, part one: pieces I've written. `id` is the anchor the home page links to.
 export const myArticles = [
   { id: 'information-structures', source: 'Essay', meta: '[Where it’s published] · 2026', title: 'Information structures', why: '[One line on what the piece argues.]', href: '#' },

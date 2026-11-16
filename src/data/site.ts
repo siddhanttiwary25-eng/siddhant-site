@@ -27,12 +27,12 @@ export const lately: (string | { text: string; href: string })[] = [
 
 // The six heads on the home page, left to right.
 export const sections = [
+  { label: 'About me', href: '/about', head: '/heads/common-marmoset.webp' },
   { label: 'Ideas', href: '/ideas', head: '/heads/golden-lion-tamarin.webp' },
   { label: 'Work', href: '/work', head: '/heads/orangutan.webp' },
   { label: 'Creative projects', href: '/creative', head: '/heads/red-bellied-guenon.webp' },
   { label: 'Articles', href: '/articles', head: '/heads/lion-tailed-macaque.webp' },
   { label: 'Songs & albums', href: '/music', head: '/heads/red-tailed-monkey.webp' },
-  { label: 'About me', href: '/about', head: '/heads/common-marmoset.webp' },
 ];
 
 // Heads are whole monkeys from old natural-history plates (see src/data/credits.ts).
