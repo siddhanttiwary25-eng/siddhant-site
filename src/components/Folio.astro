@@ -1,5 +1,5 @@
 ---
-// Magazine folio at the foot of a spread: the page number on the left, "Ideas  03" on the right.
+// Magazine folio at the foot of a spread: the page number on the left, "Ideas  02" on the right (one page number per section).
 interface Props {
   page: number;
   label: string;
@@ -9,5 +9,5 @@ const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <footer class="folio">
   <span><b>{pad(page)}</b></span>
-  <span>{label} <b>{pad(page + 1)}</b></span>
+  <span>{label} <b>{pad(page)}</b></span>
 </footer>
