@@ -214,13 +214,13 @@ const rungs = [
     // Figure 2: calendar
     (() => {
       const host = document.getElementById('calendar')!;
-      const W = 1000, H = 380, L = 60, R = 980, T = 20, B = 330;
+      const narrow = innerWidth < 600; const W = narrow ? 560 : 1000, H = narrow ? 460 : 380, L = 60, R = W - 20, T = 20, B = H - 50;
       const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
       const X = (y: number) => L + (y - 1986) / (2027 - 1986) * (R - L);
       const Y = (n: number) => B - (n - 455) / (498 - 455) * (B - T);
       el('line', { x1: L, x2: R, y1: B, y2: B, class: 'ax' }, svg);
       el('line', { x1: L, x2: L, y1: T, y2: B, class: 'ax' }, svg);
-      for (let y = 1990; y <= 2025; y += 5) { const tx = el('text', { x: X(y), y: B + 24, class: 'lbl', 'text-anchor': 'middle' }, svg); tx.textContent = String(y); }
+      for (let y = 1990; y <= 2025; y += (narrow ? 10 : 5)) { const tx = el('text', { x: X(y), y: B + 24, class: 'lbl', 'text-anchor': 'middle' }, svg); tx.textContent = String(y); }
       for (let n = 460; n <= 495; n += 5) { const tx = el('text', { x: L - 10, y: Y(n) + 4, class: 'lbl', 'text-anchor': 'end' }, svg); tx.textContent = ord(n); }
       el('line', { x1: X(1986.5), y1: Y(456.5), x2: X(2026.5), y2: Y(496.5), class: 'expect' }, svg);
       const guide = el('line', { y1: T, y2: B, class: 'guide' }, svg);
@@ -287,7 +287,7 @@ const rungs = [
     // Figure 6: pray / joke scatter
     (() => {
       const host = document.getElementById('prayjoke')!, out = document.getElementById('pj-out')!;
-      const W = 1000, H = 520, L = 70, R = 970, T = 20, B = 460;
+      const narrow = innerWidth < 600; const W = narrow ? 560 : 1000, H = narrow ? 600 : 520, L = narrow ? 64 : 70, R = W - 30, T = 44, B = H - 60;
       const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
       const XM = Math.max(.4, Math.ceil(Math.max(...Object.values(D.prayjoke).flat().map((r: any) => r.pray)) * 10) / 10);
       const X = (v: number) => L + v / XM * (R - L), Y = (v: number) => B - v * (B - T);
@@ -296,7 +296,7 @@ const rungs = [
       Array.from({ length: Math.round(XM * 10 / 2) + 1 }, (_, i) => i * .2).filter((v) => v <= XM + 1e-9).forEach((v) => { const t = el('text', { x: X(v), y: B + 24, class: 'lbl', 'text-anchor': 'middle' }, svg); t.textContent = Math.round(v * 100) + '%'; });
       [0, .25, .5, .75, 1].forEach((v) => { const t = el('text', { x: L - 10, y: Y(v) + 4, class: 'lbl', 'text-anchor': 'end' }, svg); t.textContent = Math.round(v * 100) + '%'; });
       const xl = el('text', { x: (L + R) / 2, y: H - 8, class: 'lbl ital', 'text-anchor': 'middle' }, svg); xl.textContent = 'share of the ad that is prayer →';
-      const yl = el('text', { x: 16, y: (T + B) / 2, class: 'lbl ital', 'text-anchor': 'middle', transform: `rotate(-90 16 ${(T + B) / 2})` }, svg); yl.textContent = 'how playful its other lines are →';
+      const yl = el('text', { x: L - 10, y: 16, class: 'lbl ital' }, svg); yl.textContent = '↑ playful share of other lines';
       const trend = el('line', { class: 'trend' }, svg);
       const g = el('g', {}, svg);
       const names: Record<string, string> = { claude: 'Read by Claude (Opus and Sonnet agreeing)', jev: 'Read by Jev, a model from another company', majority: 'Read by all three, majority vote' };
