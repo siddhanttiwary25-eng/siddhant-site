@@ -49,12 +49,13 @@ export const creative = [
 
 // Creative page, second section: one-off experiments and benchmarks.
 export const experiments = [
+  { meta: 'Data investigation · November 2026', title: 'Trying to solve the May Day Mystery', summary: 'Since 1981 a student paper in Arizona has run baffling ads every May Day. I turned all 116 into data and tested the theories against fake versions: the calendar is real, the hidden maths isn’t.', preview: '/projects/may-day.webp', href: '/articles/may-day-mystery', code: null },
   { meta: 'Benchmark · November 2026', title: 'Same bet?', summary: 'Is a Polymarket market and a Kalshi market the same bet? I tested TypeSafe’s Jev against title matching on 197 hand-labeled look-alike pairs: 98% accurate with zero false matches, against 83% for the best title match.', preview: '/projects/same-bet.webp', href: '/same-bet/', code: 'https://github.com/siddhanttiwary25-eng/same-bet-jev' },
 ];
 
 // Articles page, part one: pieces I've written. `id` is the anchor the home page links to.
 export const myArticles = [
-  { id: 'information-structures', source: 'Essay', meta: '[Where it’s published] · 2026', title: 'Information structures', why: '[One line on what the piece argues.]', href: '#' },
+  { id: 'may-day-mystery', source: 'Essay', meta: 'Siddhant Tiwary · November 2026', title: 'Trying to solve the May Day Mystery', why: 'Forty-five years of strange newspaper ads, a database, and the theories that didn’t survive it.', href: '/articles/may-day-mystery' },
 ];
 
 // Articles page, part two: things I've read recently.

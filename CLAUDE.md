@@ -16,6 +16,7 @@ Built with Astro (static site). Live at https://siddhanttiwary.com (also www. an
 ## Where things live
 - `src/data/site.ts` — name, top links (Twitter, Contact, GitHub), the "Lately…" sentence, the six sections and their monkeys, the source note.
 - `src/data/pages.ts` — Work (resume format: company · place · dates, role title, italic one-line company description, bullets copied from his resume), Creative projects, Articles, Songs & albums content. Articles has two lists: `myArticles` ("My articles", hidden on the page for now) and `readArticles` ("Recently read"); an entry's `id` is the anchor the home "Lately…" sentence can link to. `[brackets]` = placeholders still to fill. Songs & albums has three parts: Albums (cover + "Songs I liked" list), Playlists, and "Songs I can’t get out of my head"; covers live in `public/covers/` and are the real album art.
+- `src/writing/*.md` — my own articles (listed under "My articles" on /articles via `myArticles`); each has a page in `src/pages/articles/` (e.g. may-day-mystery.astro). `/articles` itself is `src/pages/articles/index.astro`.
 - `src/content/ideas/*.md` — one file per idea (150–200 words). Frontmatter: title, date, summary, references, draft.
 - `src/pages/` — one file per page. `src/layouts/Section.astro` is the shared section-page layout.
 - `src/styles/global.css` — all styling.

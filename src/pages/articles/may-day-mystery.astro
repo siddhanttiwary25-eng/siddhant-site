@@ -1,0 +1,23 @@
+---
+// One of my own articles. The text lives in src/writing/may-day-mystery.md.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import HeadSpread from '../../components/HeadSpread.astro';
+import Folio from '../../components/Folio.astro';
+import { site, h } from '../../data/site';
+import { formatDate, readMinutes } from '../../utils';
+import { Content, frontmatter, rawContent } from '../../writing/may-day-mystery.md';
+---
+<Base title={`${frontmatter.title} — ${site.name}`} description={frontmatter.summary}>
+  <Header back />
+  <div class="section mirror">
+    <HeadSpread heads={[h('lion-tailed-macaque'), h('macacus-libidinosus'), h('silvery-marmoset'), h('king-colobus'), h('proboscis-monkey'), h('red-howler')]} />
+    <main class="content post">
+      <p class="kicker">Article · {formatDate(new Date(frontmatter.date))} · {readMinutes(rawContent())} min read</p>
+      <h1 style="margin-top:18px">{frontmatter.title}</h1>
+      <p class="intro" style="font-size:20px">{frontmatter.summary}</p>
+      <div class="body"><Content /></div>
+    </main>
+  </div>
+  <Folio page={5} label="Articles" />
+</Base>
