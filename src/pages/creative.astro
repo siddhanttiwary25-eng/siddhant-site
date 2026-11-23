@@ -17,7 +17,7 @@ import { creative, experiments } from '../data/pages';
       return (
         <Tag class="card" {...(c.href ? { href: c.href, target: '_blank', rel: 'noopener' } : {})}>
           {c.preview ? (
-            <img class="preview" src={c.preview} alt={`Preview of ${c.title}`} loading="lazy" />
+            <img class="preview inset" src={c.preview} alt={`Preview of ${c.title}`} loading="lazy" />
           ) : (
             <span class="preview" aria-hidden="true"><span class="preview-label">Plate to come</span></span>
           )}

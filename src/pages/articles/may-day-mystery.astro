@@ -1,23 +1,446 @@
 ---
-// One of my own articles. The text lives in src/writing/may-day-mystery.md.
+// One of my own articles, told as an illustrated, interactive story.
+// The words still live in src/writing/may-day-mystery.md (one paragraph per block, in order);
+// the charts read src/data/mayday.json (exported from ~/Downloads/mayday-mystery/tools/export_site_data.py).
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
-import HeadSpread from '../../components/HeadSpread.astro';
 import Folio from '../../components/Folio.astro';
-import { site, h } from '../../data/site';
+import { site } from '../../data/site';
 import { formatDate, readMinutes } from '../../utils';
-import { Content, frontmatter, rawContent } from '../../writing/may-day-mystery.md';
+import { frontmatter, rawContent } from '../../writing/may-day-mystery.md';
+import data from '../../data/mayday.json';
+
+const paras = rawContent().trim().split(/\n\s*\n/).map((p) => p.trim());
+const P = (i: number) => paras[i] ?? '';
+
+const graveyard = [
+  { t: 'The numbers hide a layer of mathematics', f: 'Died', why: 'They hit famous constants about as often as random numbers do.' },
+  { t: 'The misspellings spell a secret message', f: 'Died', why: '44 confirmed misspelled letters. No message in English, Latin or German.' },
+  { t: 'The ads set each other off in waves', f: 'Died', why: 'An early hint vanished once each era’s favourite topics were accounted for.' },
+  { t: 'It is all random noise', f: 'Died', why: 'The calendar, the cast and the cross-references are far too consistent.' },
+  { t: 'It is one long serial story', f: 'Died', why: 'The characters are a stock for each era, not a plot that carries forward.' },
+  { t: '8/30/69 is a Texas rock festival', f: 'Unproven', why: 'My own idea. None of the ads that print the date mention Texas.' },
+  { t: 'One person wrote every ad', f: 'Can’t tell', why: 'Leans that way, but there isn’t enough surviving text to decide.' },
+  { t: 'The ads keep a sacred calendar', f: 'Survived', why: 'Every printed anniversary count is right, checked blind.' },
+  { t: 'Ads that pray also joke', f: 'Survived', why: 'Held up with two Claude coders and with Jev, from another company.' },
+];
+
+const rungs = [
+  { k: 'a', t: 'Random', d: 'Pages thrown together with no plan.', v: 'Ruled out', e: 'Real ads keep dates consistent 88% of the time; shuffled fakes, 2%. One ad is cited by 29 others.' },
+  { k: 'b', t: 'Collage', d: 'Each year rebuilt from a stock of themes, inside a fixed ritual.', v: 'Where the evidence lands', e: 'The design lives in the calendar, the header and the cross-references, not in how each page hangs together.' },
+  { k: 'c', t: 'Composed story', d: 'A single work whose parts were written to fit together.', v: 'Not reached', e: 'Real ads don’t hang together better than fakes rebuilt from their own parts.' },
+  { k: 'd', t: 'Hidden code', d: 'A message encrypted inside the text.', v: 'No evidence', e: 'Nothing found in the numbers, misspellings or underlines, though the tools for finding a code are weak.' },
+];
 ---
 <Base title={`${frontmatter.title} — ${site.name}`} description={frontmatter.summary}>
   <Header back />
-  <div class="section mirror">
-    <HeadSpread heads={[h('lion-tailed-macaque'), h('macacus-libidinosus'), h('silvery-marmoset'), h('king-colobus'), h('proboscis-monkey'), h('red-howler')]} />
-    <main class="content post">
-      <p class="kicker">Article · {formatDate(new Date(frontmatter.date))} · {readMinutes(rawContent())} min read</p>
-      <h1 style="margin-top:18px">{frontmatter.title}</h1>
-      <p class="intro" style="font-size:20px">{frontmatter.summary}</p>
-      <div class="body"><Content /></div>
-    </main>
-  </div>
+  <article class="mdm">
+    <header class="mdm-top">
+      <p class="kicker">Article · {formatDate(new Date(frontmatter.date))} · {readMinutes(rawContent())} min read · Interactive</p>
+      <h1>{frontmatter.title}</h1>
+      <p class="mdm-stand">{frontmatter.summary}</p>
+    </header>
+
+    <figure class="exh exh-wide reveal">
+      <figcaption class="cap"><span class="pl">Exh. I</span> <b>The first ad</b> · May Day, 1981. “Long live Chairman Mao,” in Chinese.</figcaption>
+      <img src="/mayday/1981-05-01.webp" width="800" height="403" alt="The first May Day Mystery ad, 1981: hand-lettered 'SR/CL: Richmond', Chinese characters reading 'Long live Chairman Mao', and 'May Day, 1981'." />
+    </figure>
+
+    <div class="mdm-text dropcap"><p>{P(0)}</p></div>
+
+    <section class="chart reveal" aria-labelledby="t-time">
+      <p class="chart-k">Figure 1</p>
+      <h2 id="t-time">Forty-five Mays</h2>
+      <p class="chart-d">Every ad in the archive, 1981 to 2026. Filled marks ran on or around May Day; open marks ran on other dates. Hover or tap a mark.</p>
+      <div id="timeline" class="viz" role="img" aria-label="Timeline of 116 ads from 1981 to 2026"></div>
+      <p class="readout" id="time-out">&nbsp;</p>
+    </section>
+
+    <div class="mdm-text"><p>{P(1)}</p></div>
+
+    <figure class="exh exh-half reveal">
+      <figcaption class="cap"><span class="pl">Exh. II</span> <b>The count</b> · June 2026. “496th Anniversary of the Confessio Augustana.” 1530 + 496 = 2026.</figcaption>
+      <img src="/mayday/2026-06-22.webp" width="1000" height="1016" alt="The June 2026 ad: a headline reading '496th Anniversary of the Confessio Augustana' above a photograph of clouds over water." />
+    </figure>
+
+    <section class="chart reveal" aria-labelledby="t-cal">
+      <p class="chart-k">Figure 2</p>
+      <h2 id="t-cal">The calendar never slips</h2>
+      <p class="chart-d">Drag the year. The line is what the count <i>should</i> be (year − 1530). The dots are what the ads actually printed.</p>
+      <div class="calc">
+        <input type="range" id="yr" min="1987" max="2026" value="1989" aria-label="Year" />
+        <p class="calc-out"><span id="yr-y">1989</span> → the <b id="yr-n">459th</b> anniversary of 25 June 1530</p>
+      </div>
+      <div id="calendar" class="viz" role="img" aria-label="Printed anniversary counts against the expected count; all fall on the line"></div>
+      <p class="readout" id="cal-out"><b>34 of 34</b> printed counts sit on the line, including two years I locked away and predicted before looking.</p>
+    </section>
+
+    <div class="mdm-text"><p>{P(2)}</p></div>
+
+    <figure class="exh exh-tall reveal">
+      <figcaption class="cap"><span class="pl">Exh. III</span> <b>The keystone</b> · May Day, 1989. Cromwell, a Julian date, a bar of music and a Hebrew psalm.</figcaption>
+      <img src="/mayday/1989-05-01.webp" width="1000" height="1583" alt="The full-page May Day 1989 ad: a crayon portrait captioned CROMWELL, surrounded by equations, a Greek-letter matrix, Hebrew and Greek scripture, a diagram and numbered instructions." />
+    </figure>
+
+    <section class="chart reveal" aria-labelledby="t-cite">
+      <p class="chart-k">Figure 3</p>
+      <h2 id="t-cite">The ad everyone points back to</h2>
+      <p class="chart-d">Later ads often quote earlier ones by date. These ten are quoted most. The dashed line is the most chance alone would give, 99 times in 100.</p>
+      <div id="cites" class="viz" role="img" aria-label="Bar chart: the 1989 ad is cited 41 times, more than twice the chance ceiling of 18"></div>
+    </section>
+
+    <div class="mdm-text"><p>{P(3)}</p></div>
+
+    <section class="chart reveal" aria-labelledby="t-grave">
+      <p class="chart-k">Figure 4</p>
+      <h2 id="t-grave">The graveyard of theories</h2>
+      <p class="chart-d">Nine ideas, each tested against rules written down before looking. Tap a card to see what happened to it.</p>
+      <ol class="grave">
+        {graveyard.map((g) => (
+          <li>
+            <button class="card" type="button" aria-expanded="false" data-fate={g.f}>
+              <span class="card-t">{g.t}</span>
+              <span class="card-b"><b class="fate">{g.f}</b><span>{g.why}</span></span>
+              <span class="card-hint">Tap to reveal</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <p class="readout" id="grave-out">0 of 9 revealed</p>
+    </section>
+
+    <section class="chart reveal" aria-labelledby="t-ladder">
+      <p class="chart-k">Figure 5</p>
+      <h2 id="t-ladder">So what are they?</h2>
+      <p class="chart-d">Four answers, from least meaning to most. Tap a rung.</p>
+      <div class="ladder">
+        <ol class="rungs">
+          {rungs.map((r) => (
+            <li><button type="button" class={`rung${r.k === 'b' ? ' on here' : ''}`} data-k={r.k} data-v={r.v} data-e={r.e} data-d={r.d}>
+              <span class="rung-l">{r.k}</span><span class="rung-t">{r.t}</span><span class="rung-v">{r.v}</span>
+            </button></li>
+          ))}
+        </ol>
+        <div class="rung-panel" aria-live="polite">
+          <p class="rung-pk" id="rung-v">Where the evidence lands</p>
+          <p class="rung-pd" id="rung-d">Each year rebuilt from a stock of themes, inside a fixed ritual.</p>
+          <p class="rung-pe" id="rung-e">The design lives in the calendar, the header and the cross-references, not in how each page hangs together.</p>
+        </div>
+      </div>
+    </section>
+
+    <figure class="exh exh-tall reveal">
+      <figcaption class="cap"><span class="pl">Exh. IV</span> <b>Prayer and play</b> · May Day, 2008. Luther, Calvin and Cromwell; an “Orate pro nobis” beside a “cybernetically sealed invitation”.</figcaption>
+      <img src="/mayday/2008-05-01.webp" width="1100" height="1549" alt="The May Day 2008 ad: a cross-shaped collage of old engravings labelled Luther, Calvin, Cromwell and Gustavus Adolphus, with physics equations, a matrix and a paragraph announcing the 478th anniversary." />
+    </figure>
+
+    <div class="mdm-text"><p>{P(4)}</p></div>
+
+    <section class="chart reveal" aria-labelledby="t-pj">
+      <p class="chart-k">Figure 6</p>
+      <h2 id="t-pj">Ads that pray also joke</h2>
+      <p class="chart-d">Each dot is one ad. Across: how much of it is prayer. Up: how playful its <i>other</i> lines are. Switch who did the reading.</p>
+      <div class="seg" role="tablist" aria-label="Who labelled the lines">
+        <button type="button" role="tab" aria-selected="true" data-who="claude">Claude (two models)</button>
+        <button type="button" role="tab" aria-selected="false" data-who="jev">Jev (another company)</button>
+        <button type="button" role="tab" aria-selected="false" data-who="majority">All three, by vote</button>
+      </div>
+      <div id="prayjoke" class="viz" role="img" aria-label="Scatter plot of prayer share against play share, rising to the right"></div>
+      <p class="readout" id="pj-out">&nbsp;</p>
+    </section>
+
+    <div class="mdm-text"><p>{P(5)}</p></div>
+
+    <section class="sealed reveal" aria-label="Sealed predictions">
+      <p class="chart-k">Sealed</p>
+      <p class="sealed-n"><span id="days">—</span> days</p>
+      <p class="sealed-d">until May Day 2027, when eight predictions I locked away get opened and scored.</p>
+    </section>
+
+    <footer class="mdm-end">
+      <p class="subhead">The project</p>
+      <ul class="mdm-links">
+        <li><a href="https://github.com/siddhanttiwary25-eng/mayday-mystery" target="_blank" rel="noopener">Code, data and the full report on GitHub ↗</a></li>
+        <li><a href="/articles">More articles</a></li>
+      </ul>
+      <p class="mdm-credit">Ads reproduced from Bryan Hance’s archive at maydaymystery.org; they first ran in the <i>Arizona Daily Wildcat</i>. Shown in greyscale, for commentary.</p>
+    </footer>
+  </article>
   <Folio page={5} label="Articles" />
+
+  <script type="application/json" id="mdm-data" set:html={JSON.stringify(data)}></script>
+  <script>
+    const D = JSON.parse(document.getElementById('mdm-data')!.textContent!);
+    const NS = 'http://www.w3.org/2000/svg';
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = (tag: string, a: Record<string, any> = {}, parent?: Element) => {
+      const n = document.createElementNS(NS, tag);
+      for (const k in a) n.setAttribute(k, String(a[k]));
+      parent?.appendChild(n); return n;
+    };
+    const fmt = (iso: string) => new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    const ord = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 - 20) % 10] || ['th', 'st', 'nd', 'rd'][n % 100] || 'th');
+
+    // reveal on scroll
+    const io = 'IntersectionObserver' in window && !reduce ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io!.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' }) : null;
+    document.querySelectorAll('.reveal').forEach((n) => io ? io.observe(n) : n.classList.add('in'));
+
+    // Figure 1: timeline
+    (() => {
+      const host = document.getElementById('timeline')!, out = document.getElementById('time-out')!;
+      const W = 1000, H = 120, x0 = 20, x1 = 980;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
+      const t = (iso: string) => { const d = new Date(iso + 'T12:00:00'); return d.getFullYear() + (d.getMonth() * 30.4 + d.getDate()) / 365; };
+      const X = (y: number) => x0 + (y - 1981) / (2026.6 - 1981) * (x1 - x0);
+      el('line', { x1: x0, x2: x1, y1: 70, y2: 70, class: 'ax' }, svg);
+      for (let y = 1985; y <= 2025; y += 5) {
+        el('line', { x1: X(y), x2: X(y), y1: 70, y2: 76, class: 'ax' }, svg);
+        const tx = el('text', { x: X(y), y: 96, class: 'lbl', 'text-anchor': 'middle' }, svg); tx.textContent = String(y);
+      }
+      const ads: string[] = [...new Set<string>(D.ads)];
+      const special: Record<string, string> = { '1981-05-01': 'Exhibit I', '1989-05-01': 'Exhibit III', '2008-05-01': 'Exhibit IV', '2026-06-22': 'Exhibit II' };
+      ads.forEach((a, i) => {
+        const md = a.slice(5) >= '04-28' && a.slice(5) <= '05-02';
+        const g = el('g', { class: 'tick', tabindex: 0 }, svg);
+        const cx = X(t(a)), cy = md ? 52 : 34;
+        el('rect', { x: cx - 6, y: 10, width: 12, height: 64, fill: 'transparent' }, g);
+        el('circle', { cx, cy, r: special[a] ? 6 : 4, class: md ? 'dot-f' : 'dot-o' }, g);
+        const show = () => { out.innerHTML = `<b>${fmt(a)}</b>${md ? ' · May Day ad' : ''}${special[a] ? ` · ${special[a]}, above and below` : ''}`; svg.querySelectorAll('.tick').forEach((n) => n.classList.remove('on')); g.classList.add('on'); };
+        g.addEventListener('mouseenter', show); g.addEventListener('focus', show); g.addEventListener('click', show);
+      });
+      out.innerHTML = `<b>${ads.length - 1} ads</b> across 45 years. Not one May Day has been missed for long.`;
+    })();
+
+    // Figure 2: calendar
+    (() => {
+      const host = document.getElementById('calendar')!;
+      const W = 1000, H = 380, L = 60, R = 980, T = 20, B = 330;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
+      const X = (y: number) => L + (y - 1986) / (2027 - 1986) * (R - L);
+      const Y = (n: number) => B - (n - 455) / (498 - 455) * (B - T);
+      el('line', { x1: L, x2: R, y1: B, y2: B, class: 'ax' }, svg);
+      el('line', { x1: L, x2: L, y1: T, y2: B, class: 'ax' }, svg);
+      for (let y = 1990; y <= 2025; y += 5) { const tx = el('text', { x: X(y), y: B + 24, class: 'lbl', 'text-anchor': 'middle' }, svg); tx.textContent = String(y); }
+      for (let n = 460; n <= 495; n += 5) { const tx = el('text', { x: L - 10, y: Y(n) + 4, class: 'lbl', 'text-anchor': 'end' }, svg); tx.textContent = ord(n); }
+      el('line', { x1: X(1986.5), y1: Y(456.5), x2: X(2026.5), y2: Y(496.5), class: 'expect' }, svg);
+      const guide = el('line', { y1: T, y2: B, class: 'guide' }, svg);
+      const ring = el('circle', { r: 11, class: 'ring' }, svg);
+      const dots: { y: number, n: number, ad: string, ho?: boolean, c: Element }[] = [];
+      D.counts.forEach((c: any) => {
+        const d = el('circle', { cx: X(c.year), cy: Y(c.n), r: c.holdout ? 6.5 : 5, class: c.holdout ? 'dot-o thick' : 'dot-f' }, svg);
+        dots.push({ y: c.year, n: c.n, ad: c.ad, ho: c.holdout, c: d });
+      });
+      const yr = document.getElementById('yr') as HTMLInputElement, yy = document.getElementById('yr-y')!, yn = document.getElementById('yr-n')!, out = document.getElementById('cal-out')!;
+      const upd = () => {
+        const y = +yr.value; yy.textContent = String(y); yn.textContent = ord(y - 1530);
+        guide.setAttribute('x1', String(X(y))); guide.setAttribute('x2', String(X(y)));
+        ring.setAttribute('cx', String(X(y))); ring.setAttribute('cy', String(Y(y - 1530)));
+        const hit = dots.filter((d) => d.y === y);
+        out.innerHTML = hit.length
+          ? `<b>${y}:</b> the ad${hit.length > 1 ? 's' : ''} printed <b>${hit.map((h) => ord(h.n)).join(' and ')}</b>. Correct.${hit.some((h) => h.ho) ? ' This was a locked prediction.' : ''}`
+          : `<b>${y}:</b> no count printed that year. <b>34 of 34</b> printed counts sit on the line.`;
+      };
+      yr.addEventListener('input', upd); upd();
+    })();
+
+    // Figure 3: citations
+    (() => {
+      const host = document.getElementById('cites')!;
+      const top = D.citations.top, p99 = D.citations.chance_p99;
+      const W = 1000, rowH = 34, L = 170, R = 940, H = top.length * rowH + 40;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
+      const max = 45, X = (v: number) => L + v / max * (R - L);
+      top.forEach((c: any, i: number) => {
+        const y = 10 + i * rowH;
+        const tx = el('text', { x: L - 14, y: y + 19, class: 'lbl', 'text-anchor': 'end' }, svg); tx.textContent = fmt(c.ad);
+        const bar = el('rect', { x: L, y: y + 4, width: reduce ? X(c.n) - L : 0, height: rowH - 12, class: i === 0 ? 'bar-on' : 'bar' }, svg);
+        (bar as any).dataset.w = X(c.n) - L;
+        const v = el('text', { x: X(c.n) + 8, y: y + 19, class: 'lbl' + (i === 0 ? ' strong' : '') }, svg); v.textContent = String(c.n);
+      });
+      el('line', { x1: X(p99), x2: X(p99), y1: 4, y2: H - 28, class: 'chance' }, svg);
+      const ct = el('text', { x: X(p99) + 6, y: H - 10, class: 'lbl ital' }, svg); ct.textContent = `chance ceiling: ${p99}`;
+      const grow = () => svg.querySelectorAll('rect').forEach((r: any) => { r.style.transition = 'width .9s cubic-bezier(.2,.8,.2,1)'; r.setAttribute('width', r.dataset.w); });
+      if (!reduce) { const o = new IntersectionObserver((es) => { if (es[0].isIntersecting) { grow(); o.disconnect(); } }, { threshold: .4 }); o.observe(host); }
+    })();
+
+    // Figure 4: graveyard
+    (() => {
+      const out = document.getElementById('grave-out')!; let n = 0;
+      document.querySelectorAll<HTMLButtonElement>('.grave .card').forEach((b) => b.addEventListener('click', () => {
+        if (b.getAttribute('aria-expanded') === 'true') return;
+        b.setAttribute('aria-expanded', 'true'); b.classList.add('open'); n++;
+        const all = [...document.querySelectorAll('.grave .card.open')].map((c) => (c as HTMLElement).dataset.fate);
+        const died = all.filter((f) => f === 'Died').length, lived = all.filter((f) => f === 'Survived').length;
+        out.textContent = n < 9 ? `${n} of 9 revealed · ${died} died, ${lived} survived so far` : `All 9 revealed: 5 died, 2 survived, 2 still undecided.`;
+      }));
+    })();
+
+    // Figure 5: ladder
+    (() => {
+      const v = document.getElementById('rung-v')!, d = document.getElementById('rung-d')!, e = document.getElementById('rung-e')!;
+      document.querySelectorAll<HTMLButtonElement>('.rung').forEach((b) => b.addEventListener('click', () => {
+        document.querySelectorAll('.rung').forEach((r) => r.classList.remove('on')); b.classList.add('on');
+        v.textContent = b.dataset.v!; d.textContent = b.dataset.d!; e.textContent = b.dataset.e!;
+      }));
+    })();
+
+    // Figure 6: pray / joke scatter
+    (() => {
+      const host = document.getElementById('prayjoke')!, out = document.getElementById('pj-out')!;
+      const W = 1000, H = 520, L = 70, R = 970, T = 20, B = 460;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'svg' }, host);
+      const XM = Math.max(.4, Math.ceil(Math.max(...Object.values(D.prayjoke).flat().map((r: any) => r.pray)) * 10) / 10);
+      const X = (v: number) => L + v / XM * (R - L), Y = (v: number) => B - v * (B - T);
+      const jit = (ad: string) => { let h = 0; for (const ch of ad) h = (h * 31 + ch.charCodeAt(0)) % 997; return (h / 997 - .5) * 14; };
+      el('line', { x1: L, x2: R, y1: B, y2: B, class: 'ax' }, svg); el('line', { x1: L, x2: L, y1: T, y2: B, class: 'ax' }, svg);
+      Array.from({ length: Math.round(XM * 10 / 2) + 1 }, (_, i) => i * .2).filter((v) => v <= XM + 1e-9).forEach((v) => { const t = el('text', { x: X(v), y: B + 24, class: 'lbl', 'text-anchor': 'middle' }, svg); t.textContent = Math.round(v * 100) + '%'; });
+      [0, .25, .5, .75, 1].forEach((v) => { const t = el('text', { x: L - 10, y: Y(v) + 4, class: 'lbl', 'text-anchor': 'end' }, svg); t.textContent = Math.round(v * 100) + '%'; });
+      const xl = el('text', { x: (L + R) / 2, y: H - 8, class: 'lbl ital', 'text-anchor': 'middle' }, svg); xl.textContent = 'share of the ad that is prayer →';
+      const yl = el('text', { x: 16, y: (T + B) / 2, class: 'lbl ital', 'text-anchor': 'middle', transform: `rotate(-90 16 ${(T + B) / 2})` }, svg); yl.textContent = 'how playful its other lines are →';
+      const trend = el('line', { class: 'trend' }, svg);
+      const g = el('g', {}, svg);
+      const names: Record<string, string> = { claude: 'Read by Claude (Opus and Sonnet agreeing)', jev: 'Read by Jev, a model from another company', majority: 'Read by all three, majority vote' };
+      const marks = new Map<string, Element>();
+      const draw = (who: string) => {
+        const rows = D.prayjoke[who], s = D.prayjoke_stats[who];
+        const seen = new Set<string>();
+        rows.forEach((r: any) => {
+          seen.add(r.ad);
+          let c = marks.get(r.ad);
+          if (!c) { c = el('circle', { r: 5.5, class: 'pt', cx: X(r.pray), cy: Y(r.play) }, g); const tt = el('title', {}, c); marks.set(r.ad, c); }
+          c.setAttribute('cx', String(X(r.pray) + jit(r.ad))); c.setAttribute('cy', String(Y(r.play)));
+          c.firstChild!.textContent = `${fmt(r.ad)}: ${Math.round(r.pray * 100)}% prayer, ${Math.round(r.play * 100)}% playful`;
+          (c as any).style.opacity = '1';
+        });
+        marks.forEach((c, ad) => { if (!seen.has(ad)) (c as any).style.opacity = '0'; });
+        // least-squares line for the eye
+        const n = rows.length, mx = rows.reduce((a: number, r: any) => a + r.pray, 0) / n, my = rows.reduce((a: number, r: any) => a + r.play, 0) / n;
+        const sl = rows.reduce((a: number, r: any) => a + (r.pray - mx) * (r.play - my), 0) / rows.reduce((a: number, r: any) => a + (r.pray - mx) ** 2, 0);
+        const xa = 0, xb = XM; trend.setAttribute('x1', String(X(xa))); trend.setAttribute('x2', String(X(xb)));
+        trend.setAttribute('y1', String(Y(Math.max(0, my + sl * (xa - mx))))); trend.setAttribute('y2', String(Y(Math.min(1, my + sl * (xb - mx)))));
+        out.innerHTML = `<b>${names[who]}.</b> ${s.n} ads. The more an ad prays, the more it jokes elsewhere: rank correlation <b>+${s.tau.toFixed(2)}</b>, and a pattern this strong turns up by chance only about <b>1 in ${Number((1 / s.p).toPrecision(2))}</b> times.`;
+      };
+      document.querySelectorAll<HTMLButtonElement>('.seg button').forEach((b) => b.addEventListener('click', () => {
+        document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-selected', 'false')); b.setAttribute('aria-selected', 'true'); draw(b.dataset.who!);
+      }));
+      draw('claude');
+    })();
+
+    // sealed countdown
+    (() => { const d = Math.ceil((new Date('2027-05-01T00:00:00-07:00').getTime() - Date.now()) / 864e5); document.getElementById('days')!.textContent = d > 0 ? String(d) : '0'; })();
+  </script>
 </Base>
+
+<style is:global>
+  .mdm { max-width: 1100px; margin: 0 auto; padding: 56px 40px 0; }
+  .mdm-top { max-width: 760px; margin: 0 auto; }
+  .mdm-top h1 { margin: 18px 0 0; font-weight: 400; font-size: 84px; line-height: .96; letter-spacing: -.02em; text-wrap: balance; }
+  .mdm-stand { margin: 18px 0 0; font-size: 22px; font-style: italic; line-height: 1.35; color: var(--ink); }
+  .mdm-text { max-width: 640px; margin: 48px auto; font-size: 19px; line-height: 1.65; text-wrap: pretty; }
+  .mdm-text p { margin: 0; }
+  .dropcap p::first-letter { float: left; margin: 7px 10px 0 0; font-size: 3.6em; line-height: .8; font-weight: 500; }
+
+  /* exhibits: plates with a caption above, like the rest of the field guide */
+  .exh { margin: 56px auto; }
+  .exh img { display: block; width: 100%; height: auto; border: 1px solid var(--ink); background: #fff; }
+  .exh .cap { font-size: 12px; margin-bottom: 10px; }
+  .exh-wide { max-width: 760px; }
+  .exh-half { max-width: 520px; }
+  .exh-tall { max-width: 620px; }
+
+  /* charts */
+  .chart { max-width: 900px; margin: 72px auto; padding-top: 14px; border-top: 1.5px solid var(--ink); }
+  .chart-k { margin: 0; font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .chart h2 { margin: 8px 0 0; font-weight: 400; font-size: 44px; line-height: 1; letter-spacing: -.01em; }
+  .chart-d { margin: 10px 0 0; max-width: 640px; font-size: 16px; color: var(--muted); }
+  .viz { margin-top: 22px; }
+  .svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--serif); }
+  .svg .ax { stroke: var(--ink); stroke-width: 1; }
+  .svg .lbl { font-size: 15px; fill: var(--muted); }
+  .svg .lbl.strong { fill: var(--ink); font-weight: 700; }
+  .svg .lbl.ital { font-style: italic; }
+  .svg .dot-f { fill: var(--ink); }
+  .svg .dot-o { fill: #fff; stroke: var(--ink); stroke-width: 1.5; }
+  .svg .dot-o.thick { stroke-width: 2.5; }
+  .svg .tick { cursor: pointer; outline: none; }
+  .svg .tick.on circle, .svg .tick:focus circle { stroke: var(--ink); stroke-width: 3; }
+  .svg .expect { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 2 5; }
+  .svg .guide { stroke: var(--rule); stroke-width: 1; }
+  .svg .ring { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+  .svg .bar { fill: var(--rule); }
+  .svg .bar-on { fill: var(--ink); }
+  .svg .chance { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 6 5; }
+  .svg .pt { fill: #fff; stroke: var(--ink); stroke-width: 1.5; transition: cx .7s cubic-bezier(.2,.8,.2,1), cy .7s cubic-bezier(.2,.8,.2,1), opacity .4s; }
+  .svg .pt:hover { fill: var(--ink); }
+  .svg .trend { stroke: var(--ink); stroke-width: 2; transition: all .7s cubic-bezier(.2,.8,.2,1); }
+  .readout { margin: 14px 0 0; min-height: 1.5em; font-size: 17px; }
+
+  .calc { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 20px; }
+  .calc input[type=range] { flex: 1 1 260px; accent-color: #111; }
+  .calc-out { margin: 0; font-size: 22px; }
+
+  /* graveyard cards: square, ruled, no shadows */
+  .grave { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .grave li { border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .card { display: flex; flex-direction: column; gap: 10px; width: 100%; min-height: 168px; padding: 18px; border: 0; border-radius: 0; background: #fff; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+  .card-t { font-size: 20px; line-height: 1.2; }
+  .card-b { display: none; font-size: 15px; color: var(--muted); }
+  .card-b .fate { display: block; margin-bottom: 4px; color: var(--ink); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .card-hint { margin-top: auto; font-size: 13px; font-style: italic; color: var(--muted); }
+  .card.open .card-b { display: block; }
+  .card.open .card-hint { display: none; }
+  .card.open[data-fate="Died"] .card-t { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .card.open[data-fate="Survived"] { background: var(--ink); color: #fff; }
+  .card.open[data-fate="Survived"] .card-b, .card.open[data-fate="Survived"] .fate { color: #fff; }
+  .card:hover:not(.open) .card-hint { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ladder */
+  .ladder { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-top: 24px; align-items: start; }
+  .rungs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column-reverse; border-top: 1px solid var(--ink); }
+  .rung { display: grid; grid-template-columns: 34px 1fr auto; align-items: baseline; gap: 12px; width: 100%; padding: 16px 12px; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+  .rung-l { font-style: italic; color: var(--muted); }
+  .rung-t { font-size: 24px; }
+  .rung-v { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .rung.on { background: var(--ink); color: #fff; }
+  .rung.on .rung-l, .rung.on .rung-v { color: #fff; }
+  .rung-panel { padding-top: 6px; }
+  .rung-pk { margin: 0; font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .rung-pd { margin: 10px 0 0; font-size: 24px; line-height: 1.25; }
+  .rung-pe { margin: 12px 0 0; font-size: 16px; color: var(--muted); }
+
+  /* segmented switch: square */
+  .seg { display: flex; flex-wrap: wrap; margin-top: 20px; border: 1.5px solid var(--ink); width: fit-content; max-width: 100%; }
+  .seg button { min-height: 44px; padding: 0 16px; border: 0; border-right: 1.5px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-selected="true"] { background: var(--ink); color: #fff; }
+
+  .sealed { max-width: 640px; margin: 72px auto; padding: 28px 0; text-align: center; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .sealed-n { margin: 6px 0 0; font-size: 96px; line-height: 1; letter-spacing: -.02em; }
+  .sealed-d { margin: 8px auto 0; max-width: 420px; font-size: 18px; font-style: italic; color: var(--muted); }
+
+  .mdm-end { max-width: 640px; margin: 64px auto 0; }
+  .mdm-links { list-style: none; margin: 16px 0 0; padding: 0; font-size: 20px; }
+  .mdm-links li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+  .mdm-links a { text-decoration: none; }
+  .mdm-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .mdm-credit { margin: 18px 0 0; font-size: 13px; font-style: italic; color: var(--muted); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .svg * { transition: none !important; } }
+
+  @media (max-width: 760px) {
+    .mdm { padding: 32px 16px 0; }
+    .mdm-top h1 { font-size: 48px; }
+    .mdm-stand { font-size: 19px; }
+    .mdm-text { font-size: 18px; margin: 36px auto; }
+    .chart { margin: 52px auto; }
+    .chart h2 { font-size: 32px; }
+    .svg .lbl { font-size: 22px; }
+    .grave { grid-template-columns: 1fr; }
+    .card { min-height: 0; }
+    .ladder { grid-template-columns: 1fr; }
+    .sealed-n { font-size: 72px; }
+    .seg button { flex: 1 1 auto; padding: 0 10px; font-size: 14px; }
+  }
+</style>
