@@ -34,13 +34,18 @@ import { creative, experiments } from '../data/pages';
   <h2 class="subhead" style="margin-top:48px">Experiments</h2>
   <div class="cards" style="margin-top:0;border-top:0">
     {experiments.map((e) => (
-      <a class="card" href={e.href}>
-        <img class="preview" src={e.preview} alt={`Preview of ${e.title}`} loading="lazy" />
-        <span class="meta" style="margin-top:12px">{e.meta}</span>
-        <h3 class="item-title" style="margin:4px 0 0">{e.title}</h3>
-        <p class="item-sum" style="margin:5px 0 0">{e.summary}</p>
-        <span class="open-link">{e.href.startsWith('/articles') ? 'Read the write-up' : 'See the results'} ↗</span>
-      </a>
+      <article class="card">
+        <a href={e.href} style="text-decoration:none;color:inherit;display:block">
+          <img class="preview" src={e.preview} alt={`Preview of ${e.title}`} loading="lazy" />
+          <span class="meta" style="margin-top:12px">{e.meta}</span>
+          <h3 class="item-title" style="margin:4px 0 0">{e.title}</h3>
+          <p class="item-sum" style="margin:5px 0 0">{e.summary}</p>
+        </a>
+        <span style="display:flex;gap:18px;flex-wrap:wrap">
+          <a class="open-link" href={e.href}>{e.href.startsWith('/articles') ? 'Read the write-up' : 'See the results'} ↗</a>
+          {e.code && <a class="open-link" href={e.code} target="_blank" rel="noopener">Code on GitHub ↗</a>}
+        </span>
+      </article>
     ))}
   </div>
 </Section>
